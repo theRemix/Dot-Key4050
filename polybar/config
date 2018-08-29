@@ -26,7 +26,7 @@ font-1 = "FontAwesome:style=Solid:pixelsize=10;1"
 font-2 = "Font Awesome:pixelsize=10;1"
 ;font-2 = "Font Awesome 5 Brands:pixelsize=10;1"
 
-modules-left = i3
+modules-left = i3 music
 modules-center = date
 modules-right = wlan battery powermenu
 
@@ -126,6 +126,15 @@ format-padding = 2
 label = %date% %time%
 label-foreground = #ccccc2
 
+[module/music]
+type = custom/script
+exec = ~/.local/bin/cmus-player-stats.sh
+interval = 5
+#click-left = cmus-remote -r
+#click-right = cmus-remote -n
+#click-middle = cmus-remote -u
+click-left = cmus-remote -u
+
 [module/battery]
 type = internal/battery
 
@@ -135,7 +144,8 @@ full-at = 99
 ; Use the following command to list batteries and adapters:
 ; $ ls -1 /sys/class/power_supply/
 battery = BAT0
-adapter = ADP1
+; adapter = ADP1
+adapter = AC
 
 ; If an inotify event haven't been reported in this many
 ; seconds, manually poll for new values.

@@ -1,3 +1,4 @@
+for file in ~/.config/fish/conf.d/*.fish
+	source $file
+end
 
-alias pbcopy="xclip -selection c"
-alias pbpaste="xclip -selection c -o"

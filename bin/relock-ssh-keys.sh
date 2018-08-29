@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+
+SSH=~/.ssh
+UNLOCKED_KEYS_PATH=unlocked
+UNLOCKED_KEYS_FULL_PATH=$SSH/$UNLOCKED_KEYS_PATH
+LOCKED_KEYS=locked.tar.bz2
+LOCKED_KEYS_ARCHIVE=$SSH/$LOCKED_KEYS
+LOCKED_KEYS_ARCHIVE_ENC=$LOCKED_KEYS_ARCHIVE.enc
+LOCKED_KEYS_ARCHIVE_ENC_TMP=$LOCKED_KEYS_ARCHIVE.enc.tmp
+BACKUP_LOCKED_KEYS_PATH=$SSH/locked-backups
+BACKUP_LOCKED_KEYS_FILE=$LOCKED_KEYS.enc-`date +%F-%T`
+
+# check if keys are unlocked first
+if [ -e $UNLOCKED_KEYS_FULL_PATH ]; then
+
+  if [ -e $LOCKED_KEYS_ARCHIVE_ENC ]; then
+    mkdir -p $BACKUP_LOCKED_KEYS_PATH
+    cp $LOCKED_KEYS_ARCHIVE_ENC $BACKUP_LOCKED_KEYS_PATH/$BACKUP_LOCKED_KEYS_FILE
+    echo "backed up $LOCKED_KEYS_ARCHIVE_ENC to $BACKUP_LOCKED_KEYS_PATH/$BACKUP_LOCKED_KEYS_FILE"
+  fi
+
+  tar -cvjf $LOCKED_KEYS_ARCHIVE -C $UNLOCKED_KEYS_FULL_PATH .
+  openssl aes-256-cbc -a -salt -in $LOCKED_KEYS_ARCHIVE -out $LOCKED_KEYS_ARCHIVE_ENC_TMP; rm $LOCKED_KEYS_ARCHIVE
+  mv $LOCKED_KEYS_ARCHIVE_ENC_TMP $LOCKED_KEYS_ARCHIVE_ENC
+
+  echo "created new locked keys archive $LOCKED_KEYS_ARCHIVE_ENC"
+  echo "keys are still unlocked!"
+else
+  echo "keys are still locked! unlock them first."
+fi
+
