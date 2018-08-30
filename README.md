@@ -11,6 +11,7 @@ _Actually can be used for any minimal debian based setup_
 - nitrogen
 - urxvt
 - fish
+- asdf
 - vim
 - tmux
 
@@ -29,4 +30,5 @@ ln -s ~/.Key4050/tmux.conf ~/.tmux.conf
 ln -s ~/.Key4050/i3 ~/.config/i3
 ln -s ~/.Key4050/fish ~/.config/fish
 ln -s ~/.Key4050/nitrogen ~/.config/nitrogen
+ln -s ~/.asdf/asdf.fish ~/.Key4050/fish/conf.d/asdf.fish
 ```
