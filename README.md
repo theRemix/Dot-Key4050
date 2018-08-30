@@ -31,4 +31,5 @@ ln -s ~/.Key4050/i3 ~/.config/i3
 ln -s ~/.Key4050/fish ~/.config/fish
 ln -s ~/.Key4050/nitrogen ~/.config/nitrogen
 ln -s ~/.asdf/asdf.fish ~/.Key4050/fish/conf.d/asdf.fish
+ln -s ~/.asdf/completions/asdf.fish ~/.Key4050/fish/completions/asdf.fish
 ```
