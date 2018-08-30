@@ -1,1 +1,0 @@
-/home/remix/.asdf/asdf.fish
