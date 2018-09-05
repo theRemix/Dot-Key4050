@@ -1,0 +1,9 @@
+[Unit]
+Description=Enable SuperCaps
+
+[Service]
+ExecStart=/bin/sh -c "xmodmap /home/remix/.xmodmaprc && xcape -e 'Control_L=Escape'"
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
