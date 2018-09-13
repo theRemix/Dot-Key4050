@@ -138,7 +138,9 @@ if has("gui_running")
   set linespace=2
   set noantialias
 else
-  colorscheme gotham
+  " colorscheme gotham256
+  colorscheme industry
+  " colorscheme murphy
 endif
 
 " Set extra options when running in GUI mode
@@ -148,6 +150,8 @@ if has("gui_running")
   set t_Co=256
   set guitablabel=%M\ %t
 endif
+
+set t_Co=256
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -178,7 +182,7 @@ endif
 set completeopt-=preview
 
 " Always show current position
-set ruler
+" set ruler
 
 " Height of the command bar
 set cmdheight=2
@@ -229,7 +233,7 @@ set t_vb=
 set tm=500
 
 " Add a bit extra margin to the left
-set foldcolumn=1
+set foldcolumn=0
 
 " Disable scrollbars
 set guioptions-=r

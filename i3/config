@@ -250,6 +250,7 @@ exec --no-startup-id clipit
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id /$HOME/.config/polybar/i3wmthemer_bar_launch.sh
+exec --no-startup-id /$HOME/.Key4050/bin/super-caps.sh
 
 # Theme colors
 client.focused #d9d6ca #1c1c22 #d9d6ca #5c828d #5c828d

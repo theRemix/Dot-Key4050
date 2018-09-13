@@ -16,9 +16,24 @@ call plug#begin('~/.vim/plugged')
 " Plug 'ctrlpvim/ctrlp.vim'
 
 " Code completion
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'roxma/nvim-yarp'
-" Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+" For func argument completion
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+
+" Deoplete JS
+Plug 'wokalski/autocomplete-flow'
+
+" Deoplete Elixir
+Plug 'slashmili/alchemist.vim'
+
+" Deoplete Go
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+
+" Deoplete Ruby
+Plug 'fishbullet/deoplete-ruby'
 
 " Tab completing
 " Plug 'ajh17/VimCompletesMe'
@@ -84,7 +99,7 @@ Plug 'tpope/vim-repeat'
 " Plug 'SirVer/ultisnips'
 
 " Elixir
-" Plug 'elixir-lang/vim-elixir'
+Plug 'elixir-lang/vim-elixir'
 
 " Quoting/parenthesizing made simple
 Plug 'tpope/vim-surround'
@@ -103,14 +118,17 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 " Vim Workspace Controller
 " Plug 'szw/vim-ctrlspace'
-Plug 'vim-ctrlspace/vim-ctrlspace'
-let g:ctrlspace_default_mapping_key = '<C-@>'
+"
+" DISABLED FOR NOW CAUSE ITS SLOW AND I DONT USE IT ENOUGH
+" Plug 'vim-ctrlspace/vim-ctrlspace'
+" let g:ctrlspace_default_mapping_key = '<C-@>'
 
 " Vim motions on speed
 Plug 'easymotion/vim-easymotion'
 
 " Shows a git diff in the gutter
-Plug 'airblade/vim-gitgutter'
+" DISABLED FOR NOW CAUSE ITS VERY SLOW!
+" Plug 'airblade/vim-gitgutter'
 
 " Instant Markdown previews
 " Requires npm -g install instant-markdown-d
@@ -144,7 +162,10 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'jiangmiao/auto-pairs'
 
 " Vim Go
-" Plug 'fatih/vim-go'
+Plug 'fatih/vim-go'
+
+" Vim Ruby
+Plug 'vim-ruby/vim-ruby'
 
 " Vim Erlang
 " Plug 'vim-erlang/vim-erlang-runtime'
@@ -168,6 +189,14 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => PLUGIN SPECIFC CONFIGURATIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""
+" vim-go plugin
+""""""""""""""""""""""""""""""
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+let g:go_test_timeout = '30s'
 
 """"""""""""""""""""""""""""""
 " bufExplorer plugin
@@ -340,9 +369,46 @@ let g:airline#extensions#default#section_truncate_width = {
 """"""""""""""""""""""""""""""
 " deoplete
 """"""""""""""""""""""""""""""
+" let g:python_host_prog = expand('/usr/bin/python2')
+" let g:python3_host_prog = substitute(g:python_host_prog, '2', '3', '')
+" let g:python_host_prog = expand('/home/remix/.asdf/shims/python')
+" let g:python3_host_prog = expand('/home/remix/.asdf/shims/python3')
+let g:deoplete#num_processes = 1
+let g:deoplete#enable_at_startup = 0 " do this manually, :call deoplete#enable()
 
-" let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option({
+" \ 'auto_complete_delay': 150,
+" \ 'smart_case': v:true,
+" \ 'yarp': v:true,
+" \ })
 
+" inoremap <expr><C-n> pumvisible() ? "\<C-n>" :
+"         \ <SID>check_back_space() ? "\<TAB>" :
+"         \ deoplete#mappings#manual_complete()
+"         function! s:check_back_space() abort "{{{
+"       let col = col('.') - 1
+"       return !col || getline('.')[col - 1]  =~ '\s'
+"         endfunction"}}}
+
+inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<C-k>"
+
+""""""""""""""""""""""""""""""
+" neosnippet
+""""""""""""""""""""""""""""""
+
+let g:neosnippet#enable_completed_snippet = 1
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 """"""""""""""""""""""""""""""
 " vim-easymotion
@@ -366,7 +432,7 @@ let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 """"""""""""""""""""""""""""""
 " vim-fugitive
 """"""""""""""""""""""""""""""
-map <leader>gg :GitGutterToggle<CR>
+" map <leader>gg :GitGutterToggle<CR>
 map <leader>gs :Gstatus<CR>
 set diffopt+=vertical
 
